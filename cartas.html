@@ -1,0 +1,52 @@
+<html>
+<button onclick="carregarCartas(dificuldade)">Jogar</button>
+<div id="cartasSelecionadas">
+
+</div>
+</html>
+<script>
+    var dificuldade = 3;
+    function carregarCartas(dificuldade){
+        switch (dificuldade){
+            case 1: 
+                sortearCartas(2);
+                break;
+            case 2: 
+                sortearCartas(4)
+                break;
+            case 3: 
+                sortearCartas(6)
+                break;
+            default: 
+
+                break;
+        }
+    }
+
+    function sortearCartas(numeroDePares){
+        var pares = new Array(numeroDePares);
+        for(i = 0; i < numeroDePares; i++){
+            var status = false;
+            while(status==false){
+                var aux = Math.floor(Math.random() * (19 - 1) + 1);     
+                if(!pares.includes(aux)){
+                    pares[i] = aux;
+                    status = true;
+                }
+            }
+            console.log(pares[i]);           
+        }
+        console.log("---------------------");
+        exibirCartas(pares);
+    }
+
+    function exibirCartas(pares){
+        console.log(pares);
+        var $div = document.querySelector("#cartasSelecionadas");
+        for(i=0; i<pares.length; i++){
+            console.log(i);
+            $div.innerHTML += '<img src="img/Image' + pares[i] + '.jpg" width="150px" heigth="150px">';
+        }
+    }
+
+</script>
