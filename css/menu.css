@@ -1,0 +1,16 @@
+.menu {
+    text-align: center;
+    color: #FFFF;
+  }
+  
+  .menu-item {
+    display: inline-block;
+    font-size: 50px;
+    margin-top: 100px;
+  }
+
+  a:link, a:visited, a:hover, a:active {
+      color: white;
+      text-decoration:none
+  }
+

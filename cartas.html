@@ -1,24 +1,76 @@
 <html>
-<button onclick="carregarCartas(dificuldade)">Jogar</button>
-<div id="cartasSelecionadas">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Musk Memory</title>
+    
+        <link rel="stylesheet" href="css/estilo.css">
+        <link rel="stylesheet" href="css/menu.css">
+</head>
+<body>
+    <!-- Tela p/ selecionar nível -->
+    <div id="selecionarNivel" class="modal">
+            
+        <!-- conteudo -->
+        <div class="modal-content">
+        <p>Selecionar dificuldade</p>
+        <button id="1" value="facil" onclick="botaoClicado(this.id)" class="button">Fácil</button>
+            
+        <button id="2" value="medio" onclick="botaoClicado(this.id)" class="button">Médio</button>
+            
+        <button id="3" value="dificil" onclick="botaoClicado(this.id)" class="button">Difícil</button>
+        <a><img id="play" src="css/imagens/botao-play.png" onclick="ok();" class="play"></a>
+        </div>
+    </div>
 
-</div>
+    <!-- quadro de cartas -->
+    <div style="background-color: white;">
+        <div id="cartasSelecionadas"></div>
+    </div>
+    
+</body>
 </html>
+
 <script>
-    var dificuldade = 3;
+    window.idBotaoClicado = 0;
+    // popup de seleção de nivel
+    var nivel = document.getElementById("selecionarNivel");
+
+    // Botao que carrega dificuldade
+    var play = document.getElementById("play");
+
+    // seta variavel global de dificuldade
+    function setLocalStorage(){
+        play.addEventListener('click', () => {
+            localStorage.setItem('dificuldade',play.nodeValue())
+        })
+    }
+    //isso fica sempre guardando o botao clicado
+    function botaoClicado(e){
+        window.idBotaoClicado = e;
+    }
+    //dificuldade selecionada
+    function ok(){
+        localStorage.setItem('dificuldade',window.idBotaoClicado);
+        nivel.style.display = "none";
+        carregarCartas(localStorage.getItem('dificuldade'));
+    }
+
     function carregarCartas(dificuldade){
+        console.log(dificuldade);
         switch (dificuldade){
-            case 1: 
+            case '1': 
                 sortearCartas(2);
                 break;
-            case 2: 
-                sortearCartas(4)
+            case '2': 
+                sortearCartas(8)
                 break;
-            case 3: 
-                sortearCartas(6)
+            case '3': 
+                sortearCartas(18)
                 break;
             default: 
-
+                
                 break;
         }
     }
@@ -48,5 +100,4 @@
             $div.innerHTML += '<img src="img/Image' + pares[i] + '.jpg" width="150px" heigth="150px">';
         }
     }
-
 </script>
