@@ -1,6 +1,7 @@
 body {
     font-family: FreeMono, monospace;
     background-color: black;
+    text-align: center;
 }
 
 .button {
@@ -57,3 +58,134 @@ body {
     height: 50px;
     background-repeat: no-repeat;
   }
+
+  #cartasSelecionadas {
+    float: left;
+  }
+
+  #cartasSelecionadas img {
+    max-width:150px;
+    max-height:100px;
+    width: auto;
+    height: auto;
+    margin: 3px;
+  }
+
+  .cabecalho{
+    background-position:right center;
+    background-size: cover;
+}
+
+.cabecalho-conteudo{
+    text-align: center;
+    color: white;
+}
+.inicio {
+  background-color: #ffffff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  float: left;
+}
+
+.quadroLateral {
+  width: 30%;
+  float: right;
+  height: 50px;
+}
+
+.cronometro {
+  height: 100px;
+  color: white;
+  font-size: large;
+}
+
+.foguete {
+  height: 350px;
+}
+
+/*TODO 
+Criar uma classe pra foguete de cada nivel, pra mudar o backgroung de acordo com o nivel que o
+jogador seleciona. No JS retira e insere novo atributo classe*/
+
+.foguete img {
+  width: 50%;
+}
+
+.astro {
+  height: 180px;
+  overflow: hidden;
+}
+
+/*TODO 
+Criar uma classe pra cada astro, pra mudar o backgroung de acordo com o ambiente que o
+jogador alcança. No JS retira e insere novo atributo classe*/
+.astro img {
+  width: 100%;
+}
+
+#date {
+  background-color: beige;
+}
+
+.facil {
+  display: none;
+  width: 35%;
+}
+
+.medio {
+  display: none;
+  width: 55%;
+}
+
+.dificil {
+  display: none;
+  width: 75%;
+}
+.tabuleiro {
+  width: 70%;
+  height: 90%;
+  float: left;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.foguete-animacao {
+  animation: foguete 7s;
+}
+/*leva o quadro de cima pro ponto 0*/
+.quadro-animacao {
+  animation: quadro 2s 3s, quadro-reverse 2s 1s;
+}
+
+@keyframes foguete {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-800px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes quadro {
+  from {
+    transform: translateY(-800px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes quadro-reverse {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(800px);
+  }
+}
