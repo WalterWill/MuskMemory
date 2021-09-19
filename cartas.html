@@ -9,6 +9,12 @@
         <link rel="stylesheet" href="css/menu.css">
 </head>
 <body>
+    <header id="header" class="cabecalho">
+        <a class="inicio" href="index.html"></a>
+        <div class="cabecalho-conteudo">
+            <h1 onclick="animacoes()">Musk Memory</h1>
+        </div>
+    </header>
     <!-- Tela p/ selecionar nível -->
     <div id="selecionarNivel" class="modal">
             
@@ -24,9 +30,32 @@
         </div>
     </div>
 
-    <!-- quadro de cartas -->
+    <!-- tabuleiro -->
     <div style="background-color: white;">
-        <div id="cartasSelecionadas"></div>
+        <!-- quadros de cartas por nivel-->
+        <div id="tabuleiro" class="tabuleiro">
+            <div name="facil" class="facil"></div>
+            <div name="medio" class="medio"></div>
+            <div name="dificil" class="dificil"></div>
+        </div>
+
+        <!-- quadro lateral -->
+        <div class="quadroLateral">
+            <div id="cronometro" class="cronometro">
+                <p style="margin: 0;">
+                    <!-- TODO quando tiver o cronometro, coloca aqui -->
+                    <script> document.write(new Date().toLocaleDateString()); </script>
+                </p>
+            </div>
+
+            <div id="foguete" class="foguete">
+                <img src="css/imagens/foguete.png">
+            </div>
+
+            <div id="astro" class="astro">
+                <img src="css/imagens/fullmoon.jpg">
+            </div>
+        </div> 
     </div>
     
 </body>
@@ -57,17 +86,33 @@
         carregarCartas(localStorage.getItem('dificuldade'));
     }
 
+    function animacoes(){
+        document.getElementById('foguete').setAttribute('class', 'foguete foguete-animacao');
+        document.getElementById('tabuleiro').setAttribute('class', 'tabuleiro quadro-animacao');
+        document.getElementById('header').setAttribute('class', 'cabecalho quadro-animacao');
+        document.getElementById('astro').setAttribute('class', 'astro quadro-animacao');
+    }
+
     function carregarCartas(dificuldade){
         console.log(dificuldade);
         switch (dificuldade){
             case '1': 
-                sortearCartas(2);
+                document.getElementsByName('facil')[0].style.display = 'block';
+                document.getElementsByName('facil')[0].setAttribute('id', 'cartasSelecionadas');
+                sortearCartas(4);
+                
                 break;
             case '2': 
-                sortearCartas(8)
+                document.getElementsByName('medio')[0].style.display = 'block';
+                document.getElementsByName('medio')[0].setAttribute('id', 'cartasSelecionadas');
+                sortearCartas(16);
+                
                 break;
             case '3': 
-                sortearCartas(18)
+                document.getElementsByName('dificil')[0].style.display = 'block';
+                document.getElementsByName('dificil')[0].setAttribute('id', 'cartasSelecionadas');
+                sortearCartas(36);
+                
                 break;
             default: 
                 
@@ -80,7 +125,7 @@
         for(i = 0; i < numeroDePares; i++){
             var status = false;
             while(status==false){
-                var aux = Math.floor(Math.random() * (19 - 1) + 1);     
+                var aux = Math.floor(Math.random() * (37 - 1) + 1);     
                 if(!pares.includes(aux)){
                     pares[i] = aux;
                     status = true;
