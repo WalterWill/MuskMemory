@@ -99,19 +99,22 @@
             case '1': 
                 document.getElementsByName('facil')[0].style.display = 'block';
                 document.getElementsByName('facil')[0].setAttribute('id', 'cartasSelecionadas');
-                sortearCartas(4);
+                tempo = 10;
+                sortearCartas(2);
                 
                 break;
             case '2': 
                 document.getElementsByName('medio')[0].style.display = 'block';
                 document.getElementsByName('medio')[0].setAttribute('id', 'cartasSelecionadas');
-                sortearCartas(16);
+                tempo = 45;
+                sortearCartas(4);
                 
                 break;
             case '3': 
                 document.getElementsByName('dificil')[0].style.display = 'block';
                 document.getElementsByName('dificil')[0].setAttribute('id', 'cartasSelecionadas');
-                sortearCartas(36);
+                tempo = 90;
+                sortearCartas(18);
                 
                 break;
             default: 
@@ -120,29 +123,90 @@
         }
     }
 
+    //Sorteia as cartas do baralho que seráo utilizadas
     function sortearCartas(numeroDePares){
-        var pares = new Array(numeroDePares);
+        var pares = new Array(numeroDePares*2);
         for(i = 0; i < numeroDePares; i++){
             var status = false;
             while(status==false){
-                var aux = Math.floor(Math.random() * (37 - 1) + 1);     
+                var aux = Math.floor(Math.random() * (19 - 1) + 1);     
                 if(!pares.includes(aux)){
                     pares[i] = aux;
                     status = true;
                 }
-            }
-            console.log(pares[i]);           
+            }           
         }
-        console.log("---------------------");
+        duplicarCartas(pares, numeroDePares);
+    }
+
+    //Duplica as cartas criando pares
+    function duplicarCartas(pares, numeroDePares){
+        var aux = new Array(numeroDePares);
+        for(i=0;i<pares.length;i++){
+           if(pares[i]!=null){
+                aux[i] = pares[i];
+            }else{
+                aux[i] = pares[i-numeroDePares];
+            }
+        }
+        embaralharCartas(aux);
+    }
+
+    //Embaralha as cartas no tabuleiro
+    function embaralharCartas(pares){
+        console.log("Entrada: "+pares);
+        for(i = pares.length - 1; i > 0; i--){
+            posicao_swap = Math.floor(Math.random() * (i) + 1);
+            console.log("posicao swap"+posicao_swap)
+            aux = pares[i];
+            pares[i] = pares[posicao_swap];
+            pares[posicao_swap] = aux;
+        }
+        console.log("Saida: "+pares);
         exibirCartas(pares);
     }
 
+    //Carrega as cartas no tabuleiro
     function exibirCartas(pares){
-        console.log(pares);
         var $div = document.querySelector("#cartasSelecionadas");
         for(i=0; i<pares.length; i++){
             console.log(i);
             $div.innerHTML += '<img src="img/Image' + pares[i] + '.jpg" width="150px" heigth="150px">';
         }
+        startTimer(tempo, document.getElementById("cronometro"));
     }
+
+    //Verifica cartas clicadas
+   function verificarSelecao(pares,carta1, carta2){
+        aux = new Array(2);
+        aux[0] = pares[carta1];
+        aux[1] = pares[carta2];
+
+        if(aux[0] == aux[1]){
+            console.log("true");
+            return true;
+        }else{
+            console.log("false");
+            return false;
+        }
+    }
+
+    //timer
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            display.textContent = minutes + ":" + seconds;
+            if (timer > 0) {
+                --timer;
+            }
+        }, 1000);
+    }
+    window.onload = function () {
+    var duration = 60 * 5; // Converter para segundos
+    display = document.querySelector('#cronometro'); // selecionando o timer
+    };
 </script>
