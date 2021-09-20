@@ -189,3 +189,28 @@ jogador alcança. No JS retira e insere novo atributo classe*/
     transform: translateY(800px);
   }
 }
+
+#link-adm-area{
+  float: left;
+}
+
+#link-adm-area img{
+    max-height: 30px;
+    width: auto;
+    height: auto;
+}
+
+.adm-table-img{
+  max-height: 200px;
+  width: auto;
+  height: auto;
+}
+
+.td-button{
+  vertical-align: middle !important;
+}
+
+.td-button button{
+  float: left;
+  vertical-align: middle;
+}
