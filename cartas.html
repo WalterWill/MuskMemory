@@ -136,11 +136,24 @@
                 }
             }           
         }
-        duplicarCartas(pares, numeroDePares);
+        saveCartas(pares);
+        duplicarCartas(numeroDePares);
+    }
+
+    //Salvar localmente cartas sorteadas
+    function saveCartas(arrayCartas){
+        localStorage.setItem("cartas", JSON.stringify(arrayCartas));
+    }
+
+    //Carregar cartas sorteadas e armazenadas localmente
+    function loadCartas(){
+        let cartas = JSON.parse(localStorage.getItem("cartas"));
+        return cartas;
     }
 
     //Duplica as cartas criando pares
-    function duplicarCartas(pares, numeroDePares){
+    function duplicarCartas(numeroDePares){
+        var pares = loadCartas();
         var aux = new Array(numeroDePares);
         for(i=0;i<pares.length;i++){
            if(pares[i]!=null){
@@ -163,6 +176,7 @@
             pares[posicao_swap] = aux;
         }
         console.log("Saida: "+pares);
+        saveCartas(pares);
         exibirCartas(pares);
     }
 
@@ -177,7 +191,8 @@
     }
 
     //Verifica cartas clicadas
-   function verificarSelecao(pares,carta1, carta2){
+   function verificarSelecao(carta1, carta2){
+        pares = loadCartas();
         aux = new Array(2);
         aux[0] = pares[carta1];
         aux[1] = pares[carta2];
