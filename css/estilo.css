@@ -4,15 +4,130 @@ body {
     text-align: center;
 }
 
+/*  É importante que seja alterado o tamanho do foguete, do astro, do cronômetro e das cartas. 
+    Alterar também o tamanho do tabuleiro de acordo com fácil, médio e difícil. */
+
+@media (max-width: 1920px) {
+  .cronometro {
+    color: white;
+    font-size: 50px;
+  }
+
+  .facil {
+    display: none;
+    width: 300px;
+  }
+  
+  .medio {
+    display: none;
+    width: 500px;
+  }
+  
+  .dificil {
+    display: none;
+    width: 700px;
+  }
+
+  .foguete {
+    position: absolute;
+    bottom: 200px;
+    right: 0;
+    width: 30%;
+    /*height: 150px;*/
+    
+  }
+
+  .astro{
+    /*height: 100px;*/
+    width: 30%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+  }
+
+  #cartasSelecionadas img{
+    max-width:150px;
+    max-height:100px;
+    width: auto;
+    height: auto;
+    margin: 3px;
+  }
+}
+
+@media (min-width: 1921px) {
+  .cronometro {
+    color: white;
+    font-size: 100px;
+  }
+  .foguete {
+    position: absolute;
+    bottom: 300px;
+    right: 0;
+    width: 30%;
+    /*height: 600px;*/
+    
+  }
+
+  .astro{
+    /*height: 500px;*/
+    width: 30%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+  }
+
+  #cartasSelecionadas img{
+    /* max-width: 250px; */
+    max-height: 200px;
+    width: auto;
+    /* height: auto; */
+    margin: 3px;
+  }
+
+  .facil {
+    display: none;
+    width: 600px;
+  }
+  
+  .medio {
+    display: none;
+    width: 1000px;
+  }
+
+  .dificil {
+    display: none;
+    width: 1300px;
+  }
+}
+
+.card{
+  
+}
+
+.disabled{
+  pointer-events:none;
+}
+
+.card:active {
+  transform: scale(0.97);
+  transition: transform .2s;
+}
+
+.flip{
+  transform-style: preserve-3d;
+  transition: transform .5s;
+  transform: rotateY(180deg);
+}
+
 .button {
     border:1px solid; 
-    padding: 11px 21px; 
-    vertical-align: middle; 
+    padding: 11px 21px;
     background-color:#000000; 
     color:white;
     border-radius:6px; 
-    font-size: 20px; 
-    font-family:helvetica, serif;
+    font-size: 20px;
     cursor: pointer;
 }
   .floatLeft{float:left};
@@ -37,7 +152,6 @@ body {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
   }
   
@@ -63,15 +177,7 @@ body {
     float: left;
   }
 
-  #cartasSelecionadas img {
-    max-width:150px;
-    max-height:100px;
-    width: auto;
-    height: auto;
-    margin: 3px;
-  }
-
-  .cabecalho{
+.cabecalho{
     background-position:right center;
     background-size: cover;
 }
@@ -80,6 +186,7 @@ body {
     text-align: center;
     color: white;
 }
+
 .inicio {
   background-color: #ffffff;
   width: 50px;
@@ -92,16 +199,10 @@ body {
   width: 30%;
   float: right;
   height: 50px;
-}
-
-.cronometro {
-  height: 100px;
-  color: white;
-  font-size: large;
-}
-
-.foguete {
-  height: 350px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 /*TODO 
@@ -109,44 +210,20 @@ Criar uma classe pra foguete de cada nivel, pra mudar o backgroung de acordo com
 jogador seleciona. No JS retira e insere novo atributo classe*/
 
 .foguete img {
-  width: 50%;
-}
-
-.astro {
-  height: 180px;
-  overflow: hidden;
+  width: 40%;
 }
 
 /*TODO 
 Criar uma classe pra cada astro, pra mudar o backgroung de acordo com o ambiente que o
 jogador alcança. No JS retira e insere novo atributo classe*/
 .astro img {
-  width: 100%;
-}
-
-#date {
-  background-color: beige;
-}
-
-.facil {
-  display: none;
-  width: 35%;
-}
-
-.medio {
-  display: none;
-  width: 55%;
-}
-
-.dificil {
-  display: none;
-  width: 75%;
+  width: 80%;
 }
 .tabuleiro {
   width: 70%;
   height: 90%;
   float: left;
-  overflow: hidden;
+  /*overflow: hidden;*/
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -188,29 +265,4 @@ jogador alcança. No JS retira e insere novo atributo classe*/
   to {
     transform: translateY(800px);
   }
-}
-
-#link-adm-area{
-  float: left;
-}
-
-#link-adm-area img{
-    max-height: 30px;
-    width: auto;
-    height: auto;
-}
-
-.adm-table-img{
-  max-height: 200px;
-  width: auto;
-  height: auto;
-}
-
-.td-button{
-  vertical-align: middle !important;
-}
-
-.td-button button{
-  float: left;
-  vertical-align: middle;
 }

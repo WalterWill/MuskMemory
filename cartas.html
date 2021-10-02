@@ -42,10 +42,7 @@
         <!-- quadro lateral -->
         <div class="quadroLateral">
             <div id="cronometro" class="cronometro">
-                <p style="margin: 0;">
-                    <!-- TODO quando tiver o cronometro, coloca aqui -->
-                    <script> document.write(new Date().toLocaleDateString()); </script>
-                </p>
+                
             </div>
 
             <div id="foguete" class="foguete">
@@ -60,6 +57,8 @@
     
 </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
 
 <script>
     window.idBotaoClicado = 0;
@@ -123,6 +122,7 @@
         }
     }
 
+
     //Sorteia as cartas do baralho que seráo utilizadas
     function sortearCartas(numeroDePares){
         var pares = new Array(numeroDePares*2);
@@ -185,10 +185,34 @@
         var $div = document.querySelector("#cartasSelecionadas");
         for(i=0; i<pares.length; i++){
             console.log(i);
-            $div.innerHTML += '<img src="img/Image' + pares[i] + '.jpg" width="150px" heigth="150px">';
+            $div.innerHTML += '<img src="img/Image' + pares[i] + '.jpg" name="'+ i +'" id="' + pares[i] +  '" class="card" width="150px" heigth="150px">';
         }
         startTimer(tempo, document.getElementById("cronometro"));
     }
+
+    //bloco de leitura de cartas selecionadas
+    const cards = document.querySelectorAll('.card');
+
+    let hasFlippedCard = false;
+    let firstCard, secondCard, firstName, secondName;
+
+    cards.forEach(card => card.addEventListener('click', flipCard));
+
+    $(document).on('click', '.card', function (){
+        this.classList.add('flip');
+        if (!hasFlippedCard) {
+            hasFlippedCard = true;
+            firstCard = this.id;
+            firstName = this.name;
+            return;
+        }
+        
+        secondCard = this.id;
+        secondName = this.name;
+        hasFlippedCard = false;
+        console.log(firstCard, secondCard);
+        verificarSelecao(firstCard, secondCard);
+    });
 
     //Verifica cartas clicadas
    function verificarSelecao(carta1, carta2){
@@ -199,11 +223,30 @@
 
         if(aux[0] == aux[1]){
             console.log("true");
+            bloqueia();
             return true;
         }else{
             console.log("false");
+            vira();
             return false;
         }
+    }
+
+    function bloqueia() {
+        console.log(firstName, secondName);
+        setTimeout(() => {
+        document.getElementsByName(firstName)[0].setAttribute('class','flip disabled');
+        document.getElementsByName(secondName)[0].setAttribute('class','flip disabled');
+        alert('ACERTOU');
+        }, 500);
+    }
+
+    function vira() {
+        setTimeout(() => {
+            document.getElementsByName(firstName)[0].classList.remove('flip');
+            document.getElementsByName(secondName)[0].classList.remove('flip');
+            alert('ERROU');
+        }, 500);
     }
 
     //timer
