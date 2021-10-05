@@ -83,6 +83,7 @@
         localStorage.setItem('dificuldade',window.idBotaoClicado);
         nivel.style.display = "none";
         carregarCartas(localStorage.getItem('dificuldade'));
+        testarRanking()
     }
 
     function animacoes(){
@@ -267,4 +268,58 @@
     var duration = 60 * 5; // Converter para segundos
     display = document.querySelector('#cronometro'); // selecionando o timer
     };
+
+    function criarRanking(){
+        ranking = new Array(10);
+        localStorage.setItem("ranking", JSON.stringify(ranking));
+    }
+
+    function loadRanking(){
+        let ranking = JSON.parse(localStorage.getItem("ranking"));
+        return ranking;
+    }
+
+    function saveRanking(array){
+        localStorage.setItem("ranking", JSON.stringify(array));
+    }
+
+    function verificaRanking(pontuacao){
+        atual_ranking = loadRanking();
+        aux = 0;
+        for (let i = 0; i < atual_ranking.length; i++) {
+            if (pontuacao > atual_ranking[i]) {
+                aux = atual_ranking[i];
+                atual_ranking[i] = pontuacao;
+                pontuacao = aux;
+            }
+            
+        }
+        saveRanking(atual_ranking);
+    }
+
+    function testarRanking(){
+        criarRanking();
+        console.log('--- Testando Ranking ---');
+        for (let i = 0; i <= 10 ; i++) {
+            var n = Math.floor(Math.random() * (19 - 1) + 1);
+            console.log('Pontuação: '+n);
+            verificaRanking(n);
+        }
+    }
+
+    
+
+    //Retorna Array com as imagens salvas no Local Storage
+    function loadFromLocalStorage(){
+        return JSON.parse(localStorage.getItem("images"));
+    }
+
+    //Adiciona imagem no Local Storage
+    function addImage(imgData){
+        imagesObject = loadFromLocalStorage();
+        imagesObject.push(imgData);
+        localStorage.setItem("images", JSON.stringify(imagesObject));
+    }
+
+
 </script>
