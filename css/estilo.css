@@ -1,6 +1,6 @@
 body {
     font-family: FreeMono, monospace;
-    background-color: black;
+    background: url("./imagens/Wallpaper.png") no-repeat fixed center;
     text-align: center;
 }
 
@@ -44,6 +44,14 @@ body {
     bottom: 0;
     right: 0;
     z-index: -1;
+  }
+
+  .hidden{
+    display: none;
+  }
+
+  .verso-facil{
+    background: url("./imagens/versos/verso_facil.jpg") no-repeat fixed center;
   }
 
   #cartasSelecionadas img{
