@@ -20,7 +20,8 @@
         localStorage.setItem('dificuldade',window.idBotaoClicado);
         nivel.style.display = "none";
         carregarCartas(localStorage.getItem('dificuldade'));
-        testarRanking()
+        initialPoints();
+        testarRanking();
     }
 
     function animacoes(){
@@ -304,16 +305,108 @@
         }
     }
 
-    
+    function initialPoints() {
+        let points = 0;
+        let rounds = Array(3);
 
-    //Retorna Array com as imagens salvas no Local Storage
-    function loadFromLocalStorage(){
-        return JSON.parse(localStorage.getItem("images"));
+        rounds[0] = False;
+        rounds[1] = False;
+        rounds[2] = False;
+
+        localStorage.setItem("current_points", points);
+        localStorage.setItem("checkpoint_points", points);
+        localStorage.setItem("rounds", JSON.stringify(rounds));
     }
 
-    //Adiciona imagem no Local Storage
-    function addImage(imgData){
-        imagesObject = loadFromLocalStorage();
-        imagesObject.push(imgData);
-        localStorage.setItem("images", JSON.stringify(imagesObject));
+    function addPoints(n) {
+        let current_points = parseInt(localStorage.getItem("current_points"));
+        current_points += n;
+        localStorage.setItem("current_points", current_points);
+    }
+
+    function addRoundPoints() {
+        let current_points = parseInt(localStorage.getItem("current_points"));
+        let round_points = 0;
+
+        dificuldade = parseInt(localStorage.getItem("dificuldade"));
+        switch (dificuldade) {
+            case 1:
+                round_points = 100;
+                break;
+            case 2:
+                round_points = 100;
+                break;
+            case 3:
+                round_points = 100;
+                break;
+                    
+            default:
+                break;
+        }
+
+        current_points += round_points;
+        localStorage.setItem("current_points", current_points);
+    }
+
+    function refreshCheckpoint() {
+        let current_points = parseInt(localStorage.getItem("current_points"));
+        localStorage.setItem("checkpoint_points", current_points);
+    }
+
+    function getPoints() {
+        return parseInt(localStorage.getItem("current_points"));
+    }
+
+    function isReadyForNext() {
+        let rounds = JSON.parse(localStorage.getItem("rounds"));
+        return rounds[2];
+    }
+
+    function resetRound() {
+        let rounds = JSON.parse(localStorage.getItem("rounds"));
+
+        rounds[0] = False;
+        rounds[1] = False;
+        rounds[2] = False;
+
+        localStorage.setItem("rounds", JSON.stringify(rounds));
+    }
+
+    function finishRound() {
+        let rounds = JSON.parse(localStorage.getItem("rounds"));
+        let status = False;
+        let count = 0;
+        while (status == False) {
+            if (rounds[count] == False) {
+                rounds[count] = True;
+                status = True;
+            }
+
+            if (count < (rounds.length - 1)) {
+                count++;
+            }
+        }
+    }
+
+    function jeffBezos() {
+        let points = parseInt(localStorage.getItem("checkpoint_points"));
+        localStorage.setItem("current_points", points);
+    }
+
+    function nasaContract(params) {
+        dificuldade = parseInt(localStorage.getItem("dificuldade"));
+        switch (dificuldade) {
+            case 1:
+                addPoints(100);
+                break;
+            case 2:
+                addPoints(200);
+                break;
+            case 3:
+                addPoints(300);
+                break;
+                    
+            default:
+                break;
+        }
     }
