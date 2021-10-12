@@ -1,4 +1,3 @@
-
 var imagesObject = [];
 
 function handleFileSelect(evt) {
@@ -52,22 +51,22 @@ function displayNumberOfImgs(){
 
     document.getElementById("state").innerHTML = imagesObject.length + " image" + ((imagesObject.length > 1) ? "s" : "") + " stored in your browser";
     
-    document.getElementById("deleteImgs").style.display = "inline";
+    document.getElementById("deleteImg").style.display = "inline";
     
   } else {
     document.getElementById("state").innerHTML = "No images stored in your browser.";
-    document.getElementById("deleteImgs").style.display = "none";
+    document.getElementById("deleteImg").style.display = "none";
   }
   
   
 }
 
-function deleteImages(){
-  imagesObject = [];
-  localStorage.removeItem("images");
-  displayNumberOfImgs()
-  document.getElementById('list').innerHTML = "";
-}
+function deleteImage(index){
+    imagesObject = JSON.parse(localStorage.getItem("images"));
+    imagesObject.splice(index, 1);
+    localStorage.setItem("images", JSON.stringify(imagesObject));
+  }
 
-    document.getElementById('files').addEventListener('change', handleFileSelect, false);
-    loadFromLocalStorage();
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+document.getElementById('deleteImg').addEventListener("click", deleteImage);
+loadFromLocalStorage();
