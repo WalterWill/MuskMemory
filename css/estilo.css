@@ -30,7 +30,7 @@ body {
 
   .foguete {
     position: absolute;
-    bottom: 200px;
+    bottom: 250px;
     right: 0;
     width: 30%;
     /*height: 150px;*/
@@ -46,13 +46,7 @@ body {
     z-index: -1;
   }
 
-  .hidden{
-    display: none;
-  }
-
-  .verso-facil{
-    background: url("./imagens/versos/verso_facil.jpg") no-repeat fixed center;
-  }
+  
 
   #cartasSelecionadas img{
     max-width:150px;
@@ -110,6 +104,10 @@ body {
   }
 }
 
+.hidden{
+  display: none;
+}
+
 .card{
   
 }
@@ -161,6 +159,19 @@ body {
     height: 100%;
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
+  }
+
+  .modal-finalizar {
+    display: block; 
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    font-size: large;
   }
   
   .modal-content {
@@ -218,7 +229,7 @@ Criar uma classe pra foguete de cada nivel, pra mudar o backgroung de acordo com
 jogador seleciona. No JS retira e insere novo atributo classe*/
 
 .foguete img {
-  width: 40%;
+  width: 60%;
 }
 
 /*TODO 
