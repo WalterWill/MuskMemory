@@ -203,6 +203,65 @@
         }, 1750);
     }
 
+    //Inicializa os pares já encontrados
+    function initialFindedCards() {
+        let bingo;
+        let dificuldade = parseInt(localStorage.getItem("dificuldade"));
+
+        switch (dificuldade) {
+            case 1:
+                bingo = Array(2);
+                break;
+            case 2:
+                bingo = Array(8);
+                break;
+            case 3:
+                bingo = Array(18);
+                break;
+        
+            default:
+                break;
+        }
+
+        for (let i = 0; i < bingo.length; i++) {
+            bingo[i] = False;
+        }
+
+        localStorage.setItem("finded_cards", JSON.stringify(bingo));
+    }
+
+    //Get cartas encontradas
+    function getFindedCard() {
+        return JSON.parse(localStorage.getItem("finded_cards"));
+    }
+
+    //Registra carta encontrada
+    function addFindedCard(indexOfCardOnBoard) {
+        let findedCard = getFindedCard();
+        let tabuleiro = JSON.parse(localStorage.getItem("cartas"));
+
+        aux = 0;
+
+        while ((findedCard[aux] == False) && (aux < findedCard)) {
+            aux++
+        }
+
+        if (aux < findedCard.length) {
+            findedCard[aux] = tabuleiro[indexOfCardOnBoard];
+        }
+    }
+
+    //Get cartas encontradas
+    function getFindedCard() {
+        return JSON.parse(localStorage.getItem("finded_cards"));
+    }
+
+    //Todos os pares foram encontrados?
+    function isAllCardsFind(){
+        let findedCard = getFindedCard();
+        return findedCard[(findedCard.length - 1)];
+    }
+
     //timer
     function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
@@ -246,7 +305,7 @@
     function mudaAmbiante(){
         const pontuacaoteste = 101;
         setTimeout(() => {
-        if(pontuacaoteste > 100){
+        if(pontuacaoteste > 100){ //TODO WILLIAM
             document.getElementById('terra').setAttribute('class', 'hidden');
             document.getElementById('lua').removeAttribute('class');
         }else{
@@ -348,15 +407,26 @@
 
     function initialPoints() {
         let points = 0;
-        let rounds = Array(3);
-
-        rounds[0] = False;
-        rounds[1] = False;
-        rounds[2] = False;
+        let goal_points;
+        let dificuldade = parseInt(localStorage.getItem("dificuldade"));
+        switch (dificuldade) {
+            case 1:
+                goal_points = points + (20 *3);
+                break;
+            case 2:
+                goal_points = points + (40 *3);
+                break;
+            case 3:
+                goal_points = points + (150 *3);
+                break;
+        
+            default:
+                break;
+        }
 
         localStorage.setItem("current_points", points);
         localStorage.setItem("checkpoint_points", points);
-        localStorage.setItem("rounds", JSON.stringify(rounds));
+        localStorage.setItem("goal_points", goal_points);
     }
 
     function addPoints(n) {
@@ -372,13 +442,13 @@
         dificuldade = parseInt(localStorage.getItem("dificuldade"));
         switch (dificuldade) {
             case 1:
-                round_points = 100;
+                round_points = 20;
                 break;
             case 2:
-                round_points = 100;
+                round_points = 40;
                 break;
             case 3:
-                round_points = 100;
+                round_points = 150;
                 break;
                     
             default:
@@ -394,23 +464,40 @@
         localStorage.setItem("checkpoint_points", current_points);
     }
 
+    function refreshGoalPoints(params) {
+        let checkpoint = parseInt(localStorage.getItem("checkpoint_points"));
+        dificuldade = parseInt(localStorage.getItem("dificuldade"));
+        let goal_points;
+
+        switch (dificuldade) {
+            case 1:
+                goal_points = checkpoint + (20 *3);
+                break;
+            case 2:
+                goal_points = checkpoint + (40 *3);
+                break;
+            case 3:
+                goal_points = checkpoint + (150 *3);
+                break;
+        
+            default:
+                break;
+        }
+
+        localStorage.setItem("goal_points", goal_points);
+    }
+
     function getPoints() {
         return parseInt(localStorage.getItem("current_points"));
+    }
+
+    function getGoalPoints(){
+        return parseInt(localStorage.getItem("goal_points"));
     }
 
     function isReadyForNext() {
         let rounds = JSON.parse(localStorage.getItem("rounds"));
         return rounds[2];
-    }
-
-    function resetRound() {
-        let rounds = JSON.parse(localStorage.getItem("rounds"));
-
-        rounds[0] = False;
-        rounds[1] = False;
-        rounds[2] = False;
-
-        localStorage.setItem("rounds", JSON.stringify(rounds));
     }
 
     function finishRound() {
@@ -438,16 +525,63 @@
         dificuldade = parseInt(localStorage.getItem("dificuldade"));
         switch (dificuldade) {
             case 1:
-                addPoints(100);
+                addPoints(20);
                 break;
             case 2:
-                addPoints(200);
+                addPoints(40);
                 break;
             case 3:
-                addPoints(300);
+                addPoints(150);
                 break;
                     
             default:
                 break;
         }
     }
+
+    function insertjoke() {
+        let baralho = JSON.parse(localStorage.getItem("cartas"));
+        let aux = Math.floor(Math.random() * (baralho.length - 1) + 1);
+        console.log("Joke sorted: "+aux);
+        let selectedCard = baralho[aux];
+        console.log("Selected Card: "+selectedCard);
+        localStorage.setItem("coringa", selectedCard);
+    }
+
+    function isJoke(positionOfCardOnBoard) {
+        let baralho = JSON.parse(localStorage.getItem("cartas"));
+        let selectedCard = parseInt(baralho[positionOfCardOnBoard]);
+        let jokeCard = parseInt(localStorage.getItem("coringa"));
+        if (selectedCard == jokeCard) {
+            return True
+        } else {
+            return False;
+        }
+    }
+
+    function chooseJoke() {     // 0 - Jeff Bezos | 1 - Nasa contract
+        return Math.floor(Math.random() * (1) + 1);
+    }
+
+    function initialAstros(){
+        let astros = Array(8);
+
+        astros[0] = "terra";
+        astros[1] = "lua";
+        astros[2] = "marte";
+        astros[3] = "jupiter";
+        astros[4] = "saturno";
+        astros[5] = "urano";
+        astros[6] = "netuno";
+        astros[7] = "plutão";
+
+        localStorage.setItem("astros", JSON.stringify(astros));
+    }
+
+    function getAstro(indexOfAstro) {
+        let astros = JSON.parse(localStorage.getItem("astros"));
+        return astro[indexOfAstro];
+    }
+
+
+
