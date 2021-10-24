@@ -124,7 +124,8 @@
         var $div = document.querySelector("#cartasSelecionadas");
         for(i=0; i<pares.length; i++){
             console.log(i);
-            $div.innerHTML += '<img src="img/Image' + pares[i] + '.jpg" name="'+ i +'" id="' + pares[i] +  '" class="card" width="150px" heigth="150px">';
+            $div.innerHTML += '<img src="img/verso_' + localStorage.getItem('dificuldade') + '.jpg" name="'+ i +'" id="' + i +  '" class="card" width="150px" heigth="150px">';
+            $div.innerHTML += '<img src="img/Image' + pares[i] + '.jpg" name="card'+ i +'" id="card' + i +  '" class="card hidden" width="150px" heigth="150px">';
         }
         startTimer(tempo, document.getElementById("cronometro"));
     }
@@ -139,6 +140,10 @@
 
     $(document).on('click', '.card', function (){
         this.classList.add('flip');
+        setTimeout(() => {
+            this.classList.add('hidden');
+            document.getElementById('card'+this.id).classList.remove('hidden');
+        }, 330);
         if (!hasFlippedCard) {
             hasFlippedCard = true;
             firstCard = this.id;
@@ -172,20 +177,30 @@
     }
 
     function bloqueia() {
-        console.log(firstName, secondName);
+        document.getElementsByName('card'+firstName)[0].setAttribute('class','flip disabled');
+        document.getElementsByName('card'+secondName)[0].setAttribute('class','flip disabled');
         setTimeout(() => {
-        document.getElementsByName(firstName)[0].setAttribute('class','flip disabled');
-        document.getElementsByName(secondName)[0].setAttribute('class','flip disabled');
-        alert('ACERTOU');
-        }, 500);
+            //alert('ACERTOU');
+        }, 1400);
     }
 
     function vira() {
         setTimeout(() => {
+            document.getElementsByName('card'+firstName)[0].setAttribute('class','card hidden');
+            document.getElementsByName('card'+secondName)[0].setAttribute('class','card hidden');
+            console.log('card'+firstName, 'card'+secondName);
+        }, 1400);
+        setTimeout(() => {
+            document.getElementsByName(firstName)[0].classList.remove('hidden');
+            document.getElementsByName(secondName)[0].classList.remove('hidden');
+        }, 1400);
+        setTimeout(() => {
             document.getElementsByName(firstName)[0].classList.remove('flip');
-            document.getElementsByName(secondName)[0].classList.remove('flip');
-            alert('ERROU');
-        }, 500);
+            document.getElementsByName(secondName)[0].classList.remove('flip'); 
+        }, 1430);
+        setTimeout(() => {
+            //alert('ERROU');
+        }, 1750);
     }
 
     //timer
@@ -200,6 +215,11 @@
             if (timer > 0) {
                 --timer;
             }
+            if(timer == 0){
+                setInterval(function () {
+                    acabaPartida();
+                }, 1000);
+            }
         }, 1000);
     }
     window.onload = function () {
@@ -207,11 +227,32 @@
     display = document.querySelector('#cronometro'); // selecionando o timer
     };
 
+    function acabaPartida(){
+        console.log("acabou");
+        var x = document.getElementById("finalizarPartida");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        }
+    }
+
     function criarRanking(){
         ranking = new Array(10);
         localStorage.setItem("ranking_facil", JSON.stringify(ranking));
         localStorage.setItem("ranking_medio", JSON.stringify(ranking));
         localStorage.setItem("ranking_dificil", JSON.stringify(ranking));
+    }
+
+    //astros
+    function mudaAmbiante(){
+        const pontuacaoteste = 101;
+        setTimeout(() => {
+        if(pontuacaoteste > 100){
+            document.getElementById('terra').setAttribute('class', 'hidden');
+            document.getElementById('lua').removeAttribute('class');
+        }else{
+            
+        }
+        }, 2000);
     }
 
     function loadRanking(dificuldade){
