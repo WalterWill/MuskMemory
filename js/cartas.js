@@ -429,6 +429,35 @@
         localStorage.setItem("goal_points", goal_points);
     }
 
+    function calculatePointPerPair(){
+        let dificuldade = parseInt(localStorage.getItem("dificuldade"));
+        let findedCard = getFindedCard();
+
+        aux = 0;
+
+        while ((findedCard[aux] == False) && (aux < findedCard)) {
+            aux++
+        }
+
+        let total;
+        switch (dificuldade) {
+            case 1:
+                total = aux * 5;
+                break;
+            case 2:
+                total = aux * 10;
+                break;
+            case 3:
+                total = aux * 20;
+                break;
+        
+            default:
+                break;
+        }
+
+        return total;
+    }
+
     function addPoints(n) {
         let current_points = parseInt(localStorage.getItem("current_points"));
         current_points += n;
