@@ -65,21 +65,27 @@
 <script>
     function onLoad()
     {
+        var pos = 0;
         $.each(loadRanking(1), function( index, value ) {
+            ++pos;
             $('.tabela-pont-1 > tbody:last-child').append('<tr></tr>');
-            $('.tabela-pont-1 > tbody:last-child > tr:last-child').append('<td>' + index + '</td>');
+            $('.tabela-pont-1 > tbody:last-child > tr:last-child').append('<td>' + pos + '</td>');
             $('.tabela-pont-1 > tbody:last-child > tr:last-child').append('<td>' + value + '</td>');
         });
 
+        pos = 0;
         $.each(loadRanking(2), function( index, value ) {
+            ++pos;
             $('.tabela-pont-2 > tbody:last-child').append('<tr></tr>');
-            $('.tabela-pont-2 > tbody:last-child > tr:last-child').append('<td>' + index + '</td>');
+            $('.tabela-pont-2 > tbody:last-child > tr:last-child').append('<td>' + pos + '</td>');
             $('.tabela-pont-2 > tbody:last-child > tr:last-child').append('<td>' + value + '</td>');
         });
 
+        pos = 0;
         $.each(loadRanking(3), function( index, value ) {
+            ++pos;
             $('.tabela-pont-3 > tbody:last-child').append('<tr></tr>');
-            $('.tabela-pont-3 > tbody:last-child > tr:last-child').append('<td>' + index + '</td>');
+            $('.tabela-pont-3 > tbody:last-child > tr:last-child').append('<td>' + pos + '</td>');
             $('.tabela-pont-3 > tbody:last-child > tr:last-child').append('<td>' + value + '</td>');
         });
     }
