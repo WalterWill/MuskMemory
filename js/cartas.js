@@ -404,7 +404,7 @@
             }
         }
     }
-
+    //Inicializa os marcadores de pontos
     function initialPoints() {
         let points = 0;
         let goal_points;
@@ -428,7 +428,7 @@
         localStorage.setItem("checkpoint_points", points);
         localStorage.setItem("goal_points", goal_points);
     }
-
+    //Calcula o total de pontos gerados pelos pares encontrados
     function calculatePointPerPair(){
         let dificuldade = parseInt(localStorage.getItem("dificuldade"));
         let findedCard = getFindedCard();
@@ -457,13 +457,13 @@
 
         return total;
     }
-
+    //Adiciona pontos passados por parametro
     function addPoints(n) {
         let current_points = parseInt(localStorage.getItem("current_points"));
         current_points += n;
         localStorage.setItem("current_points", current_points);
     }
-
+    //Adiciona pontos de uma rodada
     function addRoundPoints() {
         let current_points = parseInt(localStorage.getItem("current_points"));
         let round_points = 0;
@@ -487,12 +487,12 @@
         current_points += round_points;
         localStorage.setItem("current_points", current_points);
     }
-
+    //Atualiza pontos do checkpoint
     function refreshCheckpoint() {
         let current_points = parseInt(localStorage.getItem("current_points"));
         localStorage.setItem("checkpoint_points", current_points);
     }
-
+    //Atualiza Meta de pontos
     function refreshGoalPoints(params) {
         let checkpoint = parseInt(localStorage.getItem("checkpoint_points"));
         dificuldade = parseInt(localStorage.getItem("dificuldade"));
@@ -515,33 +515,20 @@
 
         localStorage.setItem("goal_points", goal_points);
     }
-
+    //Consulta pontos do usuario
     function getPoints() {
         return parseInt(localStorage.getItem("current_points"));
     }
-
+    //Consulta meta de pontos
     function getGoalPoints(){
         return parseInt(localStorage.getItem("goal_points"));
     }
-
+    //Esta pronto para ir para o proximo astro?
     function isReadyForNext() {
-        let rounds = JSON.parse(localStorage.getItem("rounds"));
-        return rounds[2];
-    }
-
-    function finishRound() {
-        let rounds = JSON.parse(localStorage.getItem("rounds"));
-        let status = False;
-        let count = 0;
-        while (status == False) {
-            if (rounds[count] == False) {
-                rounds[count] = True;
-                status = True;
-            }
-
-            if (count < (rounds.length - 1)) {
-                count++;
-            }
+        if (getPoints() >= getGoalPoints()) {
+            return True;
+        } else {
+            return False;
         }
     }
 
@@ -611,6 +598,3 @@
         let astros = JSON.parse(localStorage.getItem("astros"));
         return astro[indexOfAstro];
     }
-
-
-
