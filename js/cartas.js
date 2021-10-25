@@ -19,10 +19,8 @@ function botaoClicado(e){
 function ok(){
     localStorage.setItem('dificuldade',window.idBotaoClicado);
     nivel.style.display = "none";
-    carregarCartas(localStorage.getItem('dificuldade'));
-    initialPoints();
-    initialFindedCards()
-    testarRanking();
+    initialRound();
+    startRound();
 }
 
 function animacoes(){
@@ -32,7 +30,8 @@ function animacoes(){
     document.getElementById('astro').setAttribute('class', 'astro quadro-animacao');
 }
 
-function carregarCartas(dificuldade){
+function carregarCartas(){
+    let dificuldade = localStorage.getItem('dificuldade');
     console.log("Dificuldade: "+dificuldade);
     switch (dificuldade){
         case '1': 
@@ -57,7 +56,6 @@ function carregarCartas(dificuldade){
             
             break;
         default: 
-            
             break;
     }
 }
@@ -66,7 +64,7 @@ function carregarCartas(dificuldade){
 //Sorteia as cartas do baralho que seráo utilizadas
 function sortearCartas(numeroDePares){
     var pares = new Array(numeroDePares*2);
-    for(i = 0; i < numeroDePares; i++){
+    for(let i = 0; i < numeroDePares; i++){
         var status = false;
         while(status==false){
             var aux = Math.floor(Math.random() * (19 - 1) + 1);     
@@ -87,15 +85,14 @@ function saveCartas(arrayCartas){
 
 //Carregar cartas sorteadas e armazenadas localmente
 function loadCartas(){
-    let cartas = JSON.parse(localStorage.getItem("cartas"));
-    return cartas;
+    return JSON.parse(localStorage.getItem("cartas"));
 }
 
 //Duplica as cartas criando pares
 function duplicarCartas(numeroDePares){
     var pares = loadCartas();
     var aux = new Array(numeroDePares);
-    for(i=0;i<pares.length;i++){
+    for(let i=0;i<pares.length;i++){
        if(pares[i]!=null){
             aux[i] = pares[i];
         }else{
@@ -107,15 +104,12 @@ function duplicarCartas(numeroDePares){
 
 //Embaralha as cartas no tabuleiro
 function embaralharCartas(pares){
-    //console.log("Entrada: "+pares);
-    for(i = pares.length - 1; i > 0; i--){
-        posicao_swap = Math.floor(Math.random() * (i) + 1);
-        //console.log("posicao swap"+posicao_swap)
-        aux = pares[i];
+    for(let i = pares.length - 1; i > 0; i--){
+        let posicao_swap = Math.floor(Math.random() * (i) + 1);
+        let aux = pares[i];
         pares[i] = pares[posicao_swap];
         pares[posicao_swap] = aux;
     }
-    //console.log("Saida: "+pares);
     saveCartas(pares);
     exibirCartas(pares);
 }
@@ -123,8 +117,7 @@ function embaralharCartas(pares){
 //Carrega as cartas no tabuleiro
 function exibirCartas(pares){
     var $div = document.querySelector("#cartasSelecionadas");
-    for(i=0; i<pares.length; i++){
-        //console.log(i);
+    for(let i=0; i<pares.length; i++){
         $div.innerHTML += '<img src="img/verso_' + localStorage.getItem('dificuldade') + '.jpg" name="'+ i +'" id="' + i +  '" class="card" width="150px" heigth="150px">';
         $div.innerHTML += '<img src="img/Image' + pares[i] + '.jpg" name="card'+ i +'" id="card' + i +  '" class="card hidden" width="150px" heigth="150px">';
     }
@@ -155,23 +148,20 @@ $(document).on('click', '.card', function (){
     secondCard = this.id;
     secondName = this.name;
     hasFlippedCard = false;
-    //console.log(firstCard, secondCard);
     verificarSelecao(firstName, secondName);
 });
 
 //Verifica cartas clicadas
 function verificarSelecao(carta1, carta2){
-    pares = loadCartas();
-    aux = new Array(2);
+    let pares = loadCartas();
+    let aux = new Array(2);
     aux[0] = pares[carta1];
     aux[1] = pares[carta2];
 
     if(aux[0] == aux[1]){
-        //console.log("true");
         bloqueia();
         return true;
     }else{
-        //console.log("false");
         vira();
         return false;
     }
@@ -181,7 +171,6 @@ function bloqueia() {
     document.getElementsByName('card'+firstName)[0].setAttribute('class','flip disabled');
     document.getElementsByName('card'+secondName)[0].setAttribute('class','flip disabled');
     setTimeout(() => {
-        //alert('ACERTOU');
     }, 1400);
 }
 
@@ -200,7 +189,6 @@ function vira() {
         document.getElementsByName(secondName)[0].classList.remove('flip'); 
     }, 1430);
     setTimeout(() => {
-        //alert('ERROU');
     }, 1750);
 }
 
@@ -241,9 +229,9 @@ function addFindedCard(indexOfCardOnBoard) {
     let findedCard = getFindedCard();
     let tabuleiro = JSON.parse(localStorage.getItem("cartas"));
 
-    aux = 0;
+    let aux = 0;
 
-    while ((findedCard[aux] == false) && (aux < findedCard)) {
+    while ((findedCard[aux] == false) && (aux < findedCard.length)) {
         aux++
     }
 
@@ -252,15 +240,14 @@ function addFindedCard(indexOfCardOnBoard) {
     }
 }
 
-//Get cartas encontradas
-function getFindedCard() {
-    return JSON.parse(localStorage.getItem("finded_cards"));
-}
-
 //Todos os pares foram encontrados?
 function isAllCardsFind(){
     let findedCard = getFindedCard();
-    return findedCard[(findedCard.length - 1)];
+    if (findedCard[(findedCard.length - 1)] != false) {
+        return true;
+    }
+    return false;
+    
 }
 
 //timer
@@ -288,7 +275,6 @@ display = document.querySelector('#cronometro'); // selecionando o timer
 };
 
 function acabaPartida(){
-    console.log("acabou");
     var x = document.getElementById("finalizarPartida");
     if (x.style.display === "none") {
         x.style.display = "block";
@@ -296,7 +282,7 @@ function acabaPartida(){
 }
 
 function criarRanking(){
-    ranking = new Array(10);
+    let ranking = new Array(10);
     localStorage.setItem("ranking_facil", JSON.stringify(ranking));
     localStorage.setItem("ranking_medio", JSON.stringify(ranking));
     localStorage.setItem("ranking_dificil", JSON.stringify(ranking));
@@ -306,12 +292,10 @@ function criarRanking(){
 function mudaAmbiante(){
     const pontuacaoteste = 101;
     setTimeout(() => {
-    if(pontuacaoteste > 100){ //TODO WILLIAM
-        document.getElementById('terra').setAttribute('class', 'hidden');
-        document.getElementById('lua').removeAttribute('class');
-    }else{
-        
-    }
+        if(pontuacaoteste > 100){ //TODO WILLIAM
+            document.getElementById('terra').setAttribute('class', 'hidden');
+            document.getElementById('lua').removeAttribute('class');
+        }
     }, 2000);
 }
 
@@ -350,60 +334,19 @@ function saveRanking(array, dificuldade){
             break;
     }
 }
+//Envia pontos para o Ranking, será salvo caso seja maior que a ultima posição
+function submitToRanking(pontuacao, dificuldade){
 
-function verificaRanking(pontuacao, dificuldade){
-
-    switch (dificuldade) {
-        case 1:
-            atual_ranking = loadRanking(dificuldade);
-            aux = 0;
-            for (let i = 0; i < atual_ranking.length; i++) {
-                if (pontuacao > atual_ranking[i]) {
-                aux = atual_ranking[i];
-                atual_ranking[i] = pontuacao;
-                pontuacao = aux;
-                }
-            }
-            break;
-        case 2:
-            atual_ranking = loadRanking(dificuldade);
-            aux = 0;
-            for (let i = 0; i < atual_ranking.length; i++) {
-                if (pontuacao > atual_ranking[i]) {
-                aux = atual_ranking[i];
-                atual_ranking[i] = pontuacao;
-                pontuacao = aux;
-                }
-            }
-            break;
-        case 3:
-            atual_ranking = loadRanking(dificuldade);
-            aux = 0;
-            for (let i = 0; i < atual_ranking.length; i++) {
-                if (pontuacao > atual_ranking[i]) {
-                aux = atual_ranking[i];
-                atual_ranking[i] = pontuacao;
-                pontuacao = aux;
-                }
-            }
-            break;
-                
-        default:
-            break;
-    }
-    saveRanking(atual_ranking, dificuldade);
-}
-
-function testarRanking(){
-    criarRanking();
-    console.log('--- Testando Ranking ---');
-    for (let d = 1; d <= 3; d++) {
-        for (let i = 0; i <= 10 ; i++) {
-            var n = Math.floor(Math.random() * (19 - 1) + 1);
-            //console.log('Pontuação: '+n);
-            verificaRanking(n, d);
+    let atual_ranking = loadRanking(dificuldade);
+    let aux = 0;
+    for (let i = 0; i < atual_ranking.length; i++) {
+        if (pontuacao > atual_ranking[i]) {
+            aux = atual_ranking[i];
+            atual_ranking[i] = pontuacao;
+            pontuacao = aux;
         }
     }
+    saveRanking(atual_ranking, dificuldade);
 }
 
 //Inicializa os marcadores de pontos
@@ -436,9 +379,9 @@ function calculatePointPerPair(){
     let dificuldade = parseInt(localStorage.getItem("dificuldade"));
     let findedCard = getFindedCard();
 
-    aux = 0;
+    let aux = 0;
 
-    while ((findedCard[aux] == false) && (aux < findedCard)) {
+    while ((findedCard[aux] == false) && (aux < findedCard.length)) {
         aux++
     }
 
@@ -473,7 +416,7 @@ function addRoundPoints() {
     let current_points = parseInt(localStorage.getItem("current_points"));
     let round_points = 0;
 
-    dificuldade = parseInt(localStorage.getItem("dificuldade"));
+    let dificuldade = parseInt(localStorage.getItem("dificuldade"));
     switch (dificuldade) {
         case 1:
             round_points = 20;
@@ -498,9 +441,9 @@ function refreshCheckpoint() {
     localStorage.setItem("checkpoint_points", current_points);
 }
 //Atualiza Meta de pontos
-function refreshGoalPoints(params) {
+function refreshGoalPoints() {
     let checkpoint = parseInt(localStorage.getItem("checkpoint_points"));
-    dificuldade = parseInt(localStorage.getItem("dificuldade"));
+    let dificuldade = parseInt(localStorage.getItem("dificuldade"));
     let goal_points;
 
     switch (dificuldade) {
@@ -533,9 +476,8 @@ function getGoalPoints(){
 function isReadyForNext() {
     if (getPoints() >= getGoalPoints()) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function jeffBezos() {
@@ -543,8 +485,8 @@ function jeffBezos() {
     localStorage.setItem("current_points", points);
 }
 
-function nasaContract(params) {
-    dificuldade = parseInt(localStorage.getItem("dificuldade"));
+function nasaContract() {
+    let dificuldade = parseInt(localStorage.getItem("dificuldade"));
     switch (dificuldade) {
         case 1:
             addPoints(20);
@@ -576,9 +518,8 @@ function isJoke(positionOfCardOnBoard) {
     let jokeCard = parseInt(localStorage.getItem("coringa"));
     if (selectedCard == jokeCard) {
         return true
-    } else {
-        return false;
     }
+    return false;
 }
 
 function chooseJoke() {     // 0 - Jeff Bezos | 1 - Nasa contract
@@ -602,5 +543,38 @@ function initialAstros(){
 
 function getAstro(indexOfAstro) {
     let astros = JSON.parse(localStorage.getItem("astros"));
-    return astro[indexOfAstro];
+    return astros[indexOfAstro];
+}
+//Prepara para primeiro Round
+function initialRound() {
+    initialAstros();
+    initialPoints();
+    initialFindedCards();
+    criarRanking();
+}
+
+//Salva pontuação ao final do Round
+function endedRound() {
+    //Verificar se encontrou todos os pares
+    let foundAllPair = isAllCardsFind();
+
+    //Adiciona pontuação do round
+    if (foundAllPair) {
+        addRoundPoints();
+    }else{
+        let roundPoits = calculatePointPerPair();
+        addPoints(roundPoits);
+    }
+}
+
+//Prepara para novo Round
+function startRound() {
+    //Salva pontuação
+    refreshCheckpoint();
+    refreshGoalPoints();
+
+    //Gera cartas
+    carregarCartas();
+    insertjoke();
+    initialFindedCards();
 }
