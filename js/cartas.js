@@ -349,6 +349,25 @@ function submitToRanking(pontuacao, dificuldade){
     saveRanking(atual_ranking, dificuldade);
 }
 
+function getRanking(dificuldade){
+    let aux;
+    switch (dificuldade) {
+        case 1:
+            aux = JSON.parse(localStorage.getItem("ranking_facil"));
+            break;
+        case 2:
+            aux = JSON.parse(localStorage.getItem("ranking_medio"));
+            break;
+        case 3:
+            aux = JSON.parse(localStorage.getItem("ranking_dificil"));
+            break;
+
+        default:
+            break;
+    }
+    return aux;
+}
+
 //Inicializa os marcadores de pontos
 function initialPoints() {
     let points = 0;
@@ -569,7 +588,7 @@ function endedRound() {
 
 //Prepara para novo Round
 function startRound() {
-    //Salva pontuação
+    //Salva checkpoint e meta gera nova mete de pontos
     refreshCheckpoint();
     refreshGoalPoints();
 
