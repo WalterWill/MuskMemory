@@ -22,3 +22,15 @@
     float: left;
     vertical-align: middle;
   }
+
+  #list img {
+    max-width: 300px;
+  }
+  
+  #deleteImgs {
+    display: none;
+  }
+
+  input[type="file"] {
+    display: none;
+}

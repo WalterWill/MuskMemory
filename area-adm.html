@@ -16,37 +16,88 @@
 
 </head>
 <body>
-    <button type="button" class="btn btn-success">+ Adicionar</button><br><br>
-    
-    <table class="table table-dark table-bordered">
-        <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Carta</th>
-              <th scope="col">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="menu">
+        <label for="files" class="btn btn-success">Adicionar Figura</label>
+        <input type="file" id="files">
+        <br><br>
 
-            <tr>
-                <th scope="row">1</th>
-                <td><img class="adm-table-img" src="img/disco.png"/></td>
-                <td class="td-button">
-                    <button type="button" class="btn btn-danger">Deletar</button>
-                </td>
-            </tr>
-
-            <tr>
-                <th scope="row">2</th>
-                <td><img class="adm-table-img" src="img/disco.png"/></td>
-                <td class="td-button">
-                    <button type="button" class="btn btn-danger">Deletar</button>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-
-    <input type="file" id="files">
+        <p id="state">Sem figuras</p>
+        <div id="list"></div>
+        
+        <a href="#" id="deleteImgs">Deletar Figuras</a>
+    </div>
 </body>
 </html>
+
+<script>
+    var imagesObject = [];
+
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+
+        // Only process image files.
+        if (!f.type.match('image.*')) {
+            continue;
+        }
+
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = function(e) {
+            displayImgData(e.target.result)
+            addImage(e.target.result);
+        };
+
+        reader.readAsDataURL(f);
+        }
+    }
+
+    function loadFromLocalStorage(){
+        var images = JSON.parse(localStorage.getItem("images"))
+
+        if(images && images.length > 0){
+            imagesObject = images;
+            
+            displayNumberOfImgs();
+            images.forEach(displayImgData);
+        }
+    }
+
+    function addImage(imgData){
+        imagesObject.push(imgData);
+        displayNumberOfImgs();
+        localStorage.setItem("images", JSON.stringify(imagesObject));
+    }
+
+    function displayImgData(imgData){
+        var span = document.createElement('span');
+        span.innerHTML = '<br><br><div class="row"><img class="thumb" src="' + imgData + '"/></div>';
+        document.getElementById('list').insertBefore(span, null);
+    }
+
+    function displayNumberOfImgs(){
+        if(imagesObject.length > 0){
+            document.getElementById("state").innerHTML = imagesObject.length + " figura" + ((imagesObject.length > 1) ? "s" : "") + " salva" + ((imagesObject.length > 1) ? "s" : "");
+            
+            document.getElementById("deleteImgs").style.display = "inline";
+            
+        } else {
+            document.getElementById("state").innerHTML = "Sem figuras";
+            document.getElementById("deleteImgs").style.display = "none";
+        }
+    }
+
+    function deleteImages(){
+        imagesObject = [];
+        localStorage.removeItem("images");
+        displayNumberOfImgs()
+        document.getElementById('list').innerHTML = "";
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+    document.getElementById('deleteImgs').addEventListener("click", deleteImages);
+    loadFromLocalStorage();
+</script>
