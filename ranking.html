@@ -13,33 +13,100 @@
     <link rel="stylesheet" href="css/menu.css">
 
 </head>
-<body>    
+<body onload="onLoad()">    
     <div class="menu">
-        <h2>Ranking</h2>
-        <table class="table table-dark table-bordered">
+        <h2>Ranking Fácil</h2>
+        <table class="table table-dark table-bordered tabela-pont-1">
             <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Nome</th>
                   <th scope="col">Pontuação</th>
                 </tr>
             </thead>
             <tbody>
     
+            </tbody>
+        </table>
+
+        <br><br>
+
+        <h2>Ranking Médio</h2>
+        <table class="table table-dark table-bordered tabela-pont-2">
+            <thead>
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Nome do Jogador 1</td>
-                    <td>500</td>
+                  <th scope="col">#</th>
+                  <th scope="col">Pontuação</th>
                 </tr>
+            </thead>
+            <tbody>
     
+            </tbody>
+        </table>
+
+        <br><br>
+
+        <h2>Ranking Difícil</h2>
+        <table class="table table-dark table-bordered tabela-pont-3">
+            <thead>
                 <tr>
-                    <th scope="row">2</th>
-                    <td>Nome do Jogador 2</td>
-                    <td>450</td>    
+                  <th scope="col">#</th>
+                  <th scope="col">Pontuação</th>
                 </tr>
+            </thead>
+            <tbody>
     
             </tbody>
         </table>
     </div>
 </body>
 </html>
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script>
+    function onLoad()
+    {
+        var pos = 0;
+        $.each(loadRanking(1), function( index, value ) {
+            ++pos;
+            $('.tabela-pont-1 > tbody:last-child').append('<tr></tr>');
+            $('.tabela-pont-1 > tbody:last-child > tr:last-child').append('<td>' + pos + '</td>');
+            $('.tabela-pont-1 > tbody:last-child > tr:last-child').append('<td>' + value + '</td>');
+        });
+
+        pos = 0;
+        $.each(loadRanking(2), function( index, value ) {
+            ++pos;
+            $('.tabela-pont-2 > tbody:last-child').append('<tr></tr>');
+            $('.tabela-pont-2 > tbody:last-child > tr:last-child').append('<td>' + pos + '</td>');
+            $('.tabela-pont-2 > tbody:last-child > tr:last-child').append('<td>' + value + '</td>');
+        });
+
+        pos = 0;
+        $.each(loadRanking(3), function( index, value ) {
+            ++pos;
+            $('.tabela-pont-3 > tbody:last-child').append('<tr></tr>');
+            $('.tabela-pont-3 > tbody:last-child > tr:last-child').append('<td>' + pos + '</td>');
+            $('.tabela-pont-3 > tbody:last-child > tr:last-child').append('<td>' + value + '</td>');
+        });
+    }
+
+    function loadRanking(dificuldade){
+    let ranking;
+    switch (dificuldade) {
+        case 1:
+            ranking = JSON.parse(localStorage.getItem("ranking_facil"));
+            break;
+        case 2:
+            ranking = JSON.parse(localStorage.getItem("ranking_medio"));
+            break;
+        case 3:
+            ranking = JSON.parse(localStorage.getItem("ranking_dificil"));
+            break;
+
+        default:
+            break;
+    }
+    return ranking;
+}
+    
+</script>
