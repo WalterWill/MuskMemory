@@ -159,6 +159,30 @@ function verificarSelecao(carta1, carta2){
     aux[1] = pares[carta2];
 
     if(aux[0] == aux[1]){
+        addFindedCard(aux[0]);
+        if(isJoke(carta1) === true){
+            if(chooseJoke() == 1){
+                console.log("1");
+                var y = document.getElementById("coringa-1");
+                if (y.style.display === "none") {
+                    y.style.display = "block";
+                    setTimeout(() => {
+                        y.style.display = "none";
+                    }, 1000);
+                }
+                
+            }
+            else if(chooseJoke() == 0){
+                console.log("0");
+                var y = document.getElementById("coringa-0");
+                if (y.style.display === "none") {
+                    y.style.display = "block";
+                    setTimeout(() => {
+                        y.style.display = "none";
+                    }, 1000);
+                }
+            }
+        }
         bloqueia();
         return true;
     }else{
@@ -170,15 +194,12 @@ function verificarSelecao(carta1, carta2){
 function bloqueia() {
     document.getElementsByName('card'+firstName)[0].setAttribute('class','flip disabled');
     document.getElementsByName('card'+secondName)[0].setAttribute('class','flip disabled');
-    setTimeout(() => {
-    }, 1400);
 }
 
 function vira() {
     setTimeout(() => {
         document.getElementsByName('card'+firstName)[0].setAttribute('class','card hidden');
         document.getElementsByName('card'+secondName)[0].setAttribute('class','card hidden');
-        console.log('card'+firstName, 'card'+secondName);
     }, 1400);
     setTimeout(() => {
         document.getElementsByName(firstName)[0].classList.remove('hidden');
@@ -188,8 +209,6 @@ function vira() {
         document.getElementsByName(firstName)[0].classList.remove('flip');
         document.getElementsByName(secondName)[0].classList.remove('flip'); 
     }, 1430);
-    setTimeout(() => {
-    }, 1750);
 }
 
 //Inicializa os pares já encontrados
@@ -276,7 +295,12 @@ display = document.querySelector('#cronometro'); // selecionando o timer
 
 function acabaPartida(){
     var x = document.getElementById("finalizarPartida");
+    endedRound();
+    if(isReadyForNext() === true){
+        mudaAmbiante();
+    }
     if (x.style.display === "none") {
+        x.textContent = getPoints();
         x.style.display = "block";
     }
 }
@@ -287,15 +311,51 @@ function criarRanking(){
     localStorage.setItem("ranking_medio", JSON.stringify(ranking));
     localStorage.setItem("ranking_dificil", JSON.stringify(ranking));
 }
-
+var astro_atual = 1; //o primeiro astro é a terra
 //astros
 function mudaAmbiante(){
-    const pontuacaoteste = 101;
+    console.log(astro_atual);
     setTimeout(() => {
-        if(pontuacaoteste > 100){ //TODO WILLIAM
+    switch (astro_atual) {
+        case 1:
             document.getElementById('terra').setAttribute('class', 'hidden');
             document.getElementById('lua').removeAttribute('class');
-        }
+            astro_atual = 2;
+            break;
+        case 2:
+            document.getElementById('lua').setAttribute('class', 'hidden');
+            document.getElementById('marte').removeAttribute('class');
+            astro_atual = 3;
+            break;
+        case 3:
+            document.getElementById('marte').setAttribute('class', 'hidden');
+            document.getElementById('jupiter').removeAttribute('class');
+            astro_atual = 4;
+            break;
+        case 4:
+            document.getElementById('jupiter').setAttribute('class', 'hidden');
+            document.getElementById('saturno').removeAttribute('class');
+            astro_atual = 5;
+            break;
+        case 5:
+            document.getElementById('saturno').setAttribute('class', 'hidden');
+            document.getElementById('urano').removeAttribute('class');
+            astro_atual = 6;
+            break;
+        case 6:
+            document.getElementById('urano').setAttribute('class', 'hidden');
+            document.getElementById('netuno').removeAttribute('class');
+            astro_atual = 7;
+            break;
+        case 7:
+            document.getElementById('netuno').setAttribute('class', 'hidden');
+            document.getElementById('plutao').removeAttribute('class');
+            astro_atual = 8;
+            break;
+
+        default:
+            break;
+    }
     }, 2000);
 }
 
@@ -455,11 +515,13 @@ function addRoundPoints() {
     localStorage.setItem("current_points", current_points);
 }
 //Atualiza pontos do checkpoint
+//primeiro atualizar o checkpoint
 function refreshCheckpoint() {
     let current_points = parseInt(localStorage.getItem("current_points"));
     localStorage.setItem("checkpoint_points", current_points);
 }
-//Atualiza Meta de pontos
+//depois o refreshgoal points pra extipular nova meta
+//Atualiza Meta de pontos, chama quando mudar de astro
 function refreshGoalPoints() {
     let checkpoint = parseInt(localStorage.getItem("checkpoint_points"));
     let dificuldade = parseInt(localStorage.getItem("dificuldade"));
@@ -541,6 +603,7 @@ function isJoke(positionOfCardOnBoard) {
     return false;
 }
 
+//Função que devo chamar caso a carta seja um coringa (resposta da função isJoke())
 function chooseJoke() {     // 0 - Jeff Bezos | 1 - Nasa contract
     return Math.floor(Math.random() * (1) + 1);
 }

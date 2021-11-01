@@ -1,227 +1,242 @@
 body {
-    font-family: FreeMono, monospace;
-    background: url("./imagens/Wallpaper.png") no-repeat fixed center;
-    text-align: center;
+  font-family: FreeMono, monospace;
+  background: url("./imagens/Wallpaper.png") no-repeat fixed center;
+  text-align: center;
+  background-size:100% 100%;
 }
 
 /*  É importante que seja alterado o tamanho do foguete, do astro, do cronômetro e das cartas. 
-    Alterar também o tamanho do tabuleiro de acordo com fácil, médio e difícil. */
+  Alterar também o tamanho do tabuleiro de acordo com fácil, médio e difícil. */
 
 @media (max-width: 1920px) {
-  .cronometro {
-    color: white;
-    font-size: 50px;
-  }
+.cronometro {
+  color: white;
+  font-size: 50px;
+}
 
-  .facil {
-    display: none;
-    width: 300px;
-  }
+.facil {
+  display: none;
+  width: 300px;
+}
+
+.medio {
+  display: none;
+  width: 500px;
+}
+
+.dificil {
+  display: none;
+  width: 700px;
+}
+
+.foguete {
+  position: absolute;
+  bottom: 250px;
+  right: 0;
+  width: 30%;
+  /*height: 150px;*/
   
-  .medio {
-    display: none;
-    width: 500px;
-  }
-  
-  .dificil {
-    display: none;
-    width: 700px;
-  }
+}
 
-  .foguete {
-    position: absolute;
-    bottom: 250px;
-    right: 0;
-    width: 30%;
-    /*height: 150px;*/
-    
-  }
+.astro{
+  /*height: 100px;*/
+  width: 30%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
 
-  .astro{
-    /*height: 100px;*/
-    width: 30%;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-  }
+.modal-finalizar {
+  display: block; 
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  font-size: 150px;
+  color: white;
+}
 
-  
-
-  #cartasSelecionadas img{
-    max-width:150px;
-    max-height:100px;
-    width: auto;
-    height: auto;
-    margin: 3px;
-  }
+#cartasSelecionadas img{
+  max-width:150px;
+  max-height:100px;
+  width: auto;
+  height: auto;
+  margin: 3px;
+}
 }
 
 @media (min-width: 1921px) {
-  .cronometro {
-    color: white;
-    font-size: 100px;
-  }
-  .foguete {
-    position: absolute;
-    bottom: 300px;
-    right: 0;
-    width: 30%;
-    /*height: 600px;*/
-    
-  }
 
-  .astro{
-    /*height: 500px;*/
-    width: 30%;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-  }
+.modal-finalizar {
+  display: block; 
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  font-size: 250px;
+  color: white;
+}
 
-  #cartasSelecionadas img{
-    /* max-width: 250px; */
-    max-height: 200px;
-    width: auto;
-    /* height: auto; */
-    margin: 3px;
-  }
-
-  .facil {
-    display: none;
-    width: 600px;
-  }
+.cronometro {
+  color: white;
+  font-size: 100px;
+}
+.foguete {
+  position: absolute;
+  bottom: 450px;
+  right: 0;
+  width: 30%;
+  /*height: 600px;*/
   
-  .medio {
-    display: none;
-    width: 1000px;
-  }
+}
 
-  .dificil {
-    display: none;
-    width: 1300px;
-  }
+.astro{
+  /*height: 500px;*/
+  width: 30%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+
+#cartasSelecionadas img{
+  /* max-width: 250px; */
+  max-height: 200px;
+  width: auto;
+  /* height: auto; */
+  margin: 3px;
+}
+
+.facil {
+  display: none;
+  width: 600px;
+}
+
+.medio {
+  display: none;
+  width: 1000px;
+}
+
+.dificil {
+  display: none;
+  width: 1300px;
+}
 }
 
 .hidden{
-  display: none;
+display: none;
 }
 
 .card{
-  
+
 }
 
 .disabled{
-  pointer-events:none;
+pointer-events:none;
 }
 
 .card:active {
-  transform: scale(0.97);
-  transition: transform .2s;
+transform: scale(0.97);
+transition: transform .2s;
 }
 
 .flip{
-  transform-style: preserve-3d;
-  transition: transform .5s;
-  transform: rotateY(180deg);
+transform-style: preserve-3d;
+transition: transform .5s;
+transform: rotateY(180deg);
 }
 
 .button {
-    border:1px solid; 
-    padding: 11px 21px;
-    background-color:#000000; 
-    color:white;
-    border-radius:6px; 
-    font-size: 20px;
-    cursor: pointer;
+  border:1px solid; 
+  padding: 11px 21px;
+  background-color:#000000; 
+  color:white;
+  border-radius:6px; 
+  font-size: 20px;
+  cursor: pointer;
 }
-  .floatLeft{float:left};
+.floatLeft{float:left};
 
-  button:hover {
-    background: #000000;
-    color: rgb(255, 255, 255);
-  }
-  
-  .button:hover, .button:focus {
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-  }
+button:hover {
+  background: #000000;
+  color: rgb(255, 255, 255);
+}
+
+.button:hover, .button:focus {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+}
 
 .modal {
-    display: block; 
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-  }
-
-  .modal-finalizar {
-    display: block; 
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    font-size: large;
-  }
-  
-  .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-  }
-
-  .play {
-    background-size: contain;
-    position: absolute;
-    cursor: pointer;
-    margin-left: 5px;
-    background-size: 50px;
-    height: 50px;
-    background-repeat: no-repeat;
-  }
-
-  #cartasSelecionadas {
-    float: left;
-  }
-
-.cabecalho{
-    background-position:right center;
-    background-size: cover;
+  display: block; 
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
 }
 
-.cabecalho-conteudo{
-    text-align: center;
-    color: white;
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }
 
-.inicio {
-  background-color: #ffffff;
-  width: 50px;
+.play {
+  background-size: contain;
+  position: absolute;
+  cursor: pointer;
+  margin-left: 5px;
+  background-size: 50px;
   height: 50px;
-  border-radius: 50%;
+  background-repeat: no-repeat;
+}
+
+#cartasSelecionadas {
   float: left;
 }
 
+.cabecalho{
+  background-position:right center;
+  background-size: cover;
+}
+
+.cabecalho-conteudo{
+  text-align: center;
+  color: white;
+}
+
+.inicio {
+background-color: #ffffff;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+float: left;
+}
+
 .quadroLateral {
-  width: 30%;
-  float: right;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+width: 30%;
+float: right;
+height: 50px;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
 }
 
 /*TODO 
@@ -229,59 +244,59 @@ Criar uma classe pra foguete de cada nivel, pra mudar o backgroung de acordo com
 jogador seleciona. No JS retira e insere novo atributo classe*/
 
 .foguete img {
-  width: 60%;
+width: 55%;
 }
 
 /*TODO 
 Criar uma classe pra cada astro, pra mudar o backgroung de acordo com o ambiente que o
 jogador alcança. No JS retira e insere novo atributo classe*/
 .astro img {
-  width: 80%;
+width: 80%;
 }
 .tabuleiro {
-  width: 70%;
-  height: 90%;
-  float: left;
-  /*overflow: hidden;*/
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+width: 70%;
+height: 90%;
+float: left;
+/*overflow: hidden;*/
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
 }
 .foguete-animacao {
-  animation: foguete 7s;
+animation: foguete 7s;
 }
 /*leva o quadro de cima pro ponto 0*/
 .quadro-animacao {
-  animation: quadro 2s 3s, quadro-reverse 2s 1s;
+animation: quadro 2s 3s, quadro-reverse 2s 1s;
 }
 
 @keyframes foguete {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-800px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+0% {
+  transform: translateY(0);
+}
+50% {
+  transform: translateY(-800px);
+}
+100% {
+  transform: translateY(0);
+}
 }
 
 @keyframes quadro {
-  from {
-    transform: translateY(-800px);
-  }
-  to {
-    transform: translateY(0);
-  }
+from {
+  transform: translateY(-800px);
+}
+to {
+  transform: translateY(0);
+}
 }
 
 @keyframes quadro-reverse {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(800px);
-  }
+from {
+  transform: translateY(0);
+}
+to {
+  transform: translateY(800px);
+}
 }
